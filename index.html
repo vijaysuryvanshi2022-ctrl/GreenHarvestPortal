@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="google-site-verification" content="KcYrtVogNSx5HE-pllbcP43G3BVvJI2TYTkrHQgws9k" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>GreenHarvest - Organic Farming Portal</title>
@@ -48,12 +47,12 @@
             font-size: 3rem;
         }
 
-        /* Adjusted form-container for better readability on backgrounds */
         .form-container {
             background-color: #ffffffcc; /* Semi-transparent white */
             padding: 25px;
             border-radius: 10px;
-            width: 320px;
+            width: 90%;
+            max-width: 500px; /* Adjusted for better content fit */
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
             text-align: center;
             margin: 30px auto;
@@ -82,7 +81,7 @@
             margin-top: 5px;
             border: 1px solid #ccc;
             border-radius: 5px;
-            box-sizing: border-box; /* Ensures padding doesn't affect width */
+            box-sizing: border-box;
         }
 
         textarea {
@@ -193,13 +192,11 @@
             background-color: #c8e6c9;
         }
 
-        /* Styles for Government Schemes Section */
         #govSchemes ul {
             list-style-type: disc;
             padding-left: 20px;
         }
 
-        /* AI Assistant Specific Styles */
         .ai-response-box {
             background-color: #f0f0f0;
             padding: 15px;
@@ -219,7 +216,6 @@
             }
         }
 
-        /* New styles for Products section */
         .products-list {
             text-align: left;
             margin-top: 20px;
@@ -240,7 +236,6 @@
             border-bottom: 1px solid #eee;
         }
         
-        /* Message Box Style */
         .message-box {
           position: fixed;
           top: 20px;
@@ -260,7 +255,6 @@
           opacity: 1;
         }
         
-        /* Backgrounds for new sections */
         .principles-bg {
           background-image: url('https://placehold.co/1000x600/699e69/ffffff?text=Green+Principles');
           background-size: cover;
@@ -279,6 +273,34 @@
           background-position: center;
         }
 
+        /* --- STYLES FOR PRODUCT CHECKER --- */
+        #output {
+          margin-top: 25px;
+          font-size: 1.2rem;
+          font-weight: 700;
+        }
+        .good { color: #2e7d32; }
+        .harmful { color: #c62828; }
+        .unknown { color: #6d4c41; }
+        .list-container {
+          margin-top: 30px;
+          padding: 15px 20px;
+          background: #c8e6c9;
+          border-radius: 8px;
+          text-align: left;
+        }
+        .list-container h3 {
+          margin-top: 0;
+          margin-bottom: 10px;
+          color: #1b5e20;
+        }
+        .list-container ul {
+          list-style-type: disc;
+          padding-left: 20px;
+          margin-top: 0;
+        }
+        /* --- END OF PRODUCT CHECKER STYLES --- */
+
     </style>
 </head>
 <body>
@@ -292,8 +314,7 @@
             <a onclick="showPrinciples()">Principles</a>
             <a onclick="showBenefits()">Benefits</a>
             <a onclick="showCommunityTips()">Community</a>
-            <a onclick="showProducts()">Products</a>
-            <a onclick="showPestAlerts()">Pest Alerts</a>
+            <a onclick="showProductChecker()">Product Checker</a>
             <a onclick="showAIAssistant()">AI Expert</a>
             <a onclick="showGovSchemes()">Govt Schemes</a>
             <a onclick="showLogin()">Logout</a>
@@ -349,6 +370,11 @@
             <div class="card" onclick="showCropSuggestion()">
                 <h3>🌾 Crop Suggestions</h3>
                 <p>Get AI-based crop suggestions based on your soil and region.</p>
+            </div>
+            
+            <div class="card" onclick="showProductChecker()">
+                <h3>✅ Product Checker</h3>
+                <p>Check if a product is suitable for organic farming.</p>
             </div>
 
             <div class="card" onclick="showWeatherForecast()">
@@ -430,8 +456,7 @@
             <p>Share your knowledge and read tips from other organic farmers!</p>
 
             <div id="tips-list" style="text-align: left; margin-top: 20px;">
-                <!-- Tips will be rendered here -->
-            </div>
+                </div>
             <p id="no-tips-message" style="text-align: center; color: #777; margin-top: 20px;"></p>
 
             <form onsubmit="event.preventDefault(); addTip();" style="margin-top: 30px;">
@@ -477,7 +502,31 @@
             <button onclick="goBackToDashboard()">🔙 Back to Dashboard</button>
         </div>
     </main>
+    
+    <main class="hidden" id="productChecker">
+        <div class="form-container">
+            <h3>Organic Farming Product Checker</h3>
+            
+            <label for="productInput">Enter Product Name:</label>
+            <input type="text" id="productInput" placeholder="E.g., Compost, Pesticide" />
+            
+            <button id="checkBtn">Check Product</button>
+            
+            <div id="output"></div>
+            
+            <div class="list-container">
+                <h3>Good Organic Products:</h3>
+                <ul id="goodList"></ul>
+            </div>
+            
+            <div class="list-container">
+                <h3>Harmful Products:</h3>
+                <ul id="harmfulList"></ul>
+            </div>
 
+            <button onclick="goBackToDashboard()">🔙 Back to Dashboard</button>
+        </div>
+    </main>
     <main class="hidden" id="weatherForecast">
         <div class="form-container">
             <h3>🌦️ Weather Forecast</h3>
@@ -565,7 +614,7 @@
             </ul>
 
             <h4>🎥 Learn How to Identify Pests</h4>
-           <iframe src="https://www.youtube.com/embed/0US13rBCa5I" frameborder="0" allowfullscreen></iframe>
+            <iframe src="https://www.youtube.com/embed/em5t8bScq9s" frameborder="0" allowfullscreen></iframe>
 
             <button onclick="goBackToDashboard()">🔙 Back to Dashboard</button>
         </div>
@@ -631,6 +680,7 @@
             document.getElementById('loginForm').classList.add('hidden');
             document.getElementById('signupForm').classList.add('hidden');
             document.getElementById('aiAssistant').classList.add('hidden');
+            document.getElementById('productChecker').classList.add('hidden'); // Added this line
 
             // Reset crop result display
             document.getElementById('cropResult').classList.add('hidden');
@@ -666,7 +716,6 @@
 
             const recommendations = [];
 
-            // Basic logic for crop suggestions
             if (season === 'Kharif') {
                 if (soil.includes('loamy') || soil.includes('clay')) {
                     recommendations.push('Rice', 'Maize', 'Cotton');
@@ -723,7 +772,6 @@
             showDashboard();
         }
 
-        // New section functions
         function showPrinciples() {
             hideAllSections();
             document.getElementById('principles').classList.remove('hidden');
@@ -734,6 +782,60 @@
             document.getElementById('benefits').classList.remove('hidden');
         }
         
+        // --- PRODUCT CHECKER SCRIPT ---
+        function showProductChecker() {
+            hideAllSections();
+            document.getElementById('productChecker').classList.remove('hidden');
+        }
+
+        const goodProducts = ['compost', 'vermicompost', 'cow dung manure', 'goat manure', 'supla', 'manure', 'mulch', 'biofertilizer', 'neem oil', 'organic pesticide', 'earthworm castings', 'cover crop', 'green manure'];
+        const harmfulProducts = ['chemical pesticide', 'pesticide', 'synthetic fertilizer', 'glyphosate', 'insecticide', 'herbicide', 'fungicide', 'chemical fertilizer', 'urea', 'synthetic herbicide'];
+
+        const productInput = document.getElementById('productInput');
+        const checkBtn = document.getElementById('checkBtn');
+        const output = document.getElementById('output');
+        const goodList = document.getElementById('goodList');
+        const harmfulList = document.getElementById('harmfulList');
+
+        function populateLists() {
+            goodList.innerHTML = ''; // Clear list before populating
+            harmfulList.innerHTML = ''; // Clear list before populating
+            goodProducts.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = product;
+                goodList.appendChild(li);
+            });
+            harmfulProducts.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = product;
+                harmfulList.appendChild(li);
+            });
+        }
+
+        checkBtn.addEventListener('click', () => {
+            const userInput = productInput.value.trim().toLowerCase();
+
+            if (!userInput) {
+                output.textContent = 'Please enter a product name.';
+                output.className = 'unknown';
+                return;
+            }
+
+            if (goodProducts.includes(userInput)) {
+                output.textContent = `"${userInput}" is a GOOD organic farming product. 🌿`; // BUG FIX: Used template literal
+                output.className = 'good';
+            } else if (harmfulProducts.includes(userInput)) {
+                output.textContent = `"${userInput}" is a HARMFUL product for organic farming. ⚠`; // BUG FIX: Used template literal
+                output.className = 'harmful';
+            } else {
+                output.textContent = `Product "${userInput}" is UNKNOWN. Please verify. ❓`; // BUG FIX: Used template literal
+                output.className = 'unknown';
+            }
+        });
+        
+        populateLists(); // Populate the product lists on page load
+        // --- END OF PRODUCT CHECKER SCRIPT ---
+
         // Community Tips functionality
         function showCommunityTips() {
             hideAllSections();
@@ -833,7 +935,7 @@
         }
 
         // Weather API functionality
-        const apiKey = '5d6da78c13c7a30294598424c2d767ba'; // NOTE: This is a sample key. Use your own key in production.
+        const apiKey = '5d6da78c13c7a30294598424c2d767ba'; 
 
         async function getWeatherForecast() {
             const city = document.getElementById('citySearchInput').value;
@@ -847,7 +949,7 @@
                 const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city},IN&appid=${apiKey}&units=metric`);
                 const data = await response.json();
 
-                if (data.cod !== "200") { // Check if the API returned an error
+                if (data.cod !== "200") {
                     document.getElementById('todayWeather').innerHTML = `<strong>Error:</strong> ${data.message || `Could not fetch data for "${city}"`}`;
                     return;
                 }
@@ -863,11 +965,9 @@
 
                 const forecastByDay = {};
                 for (let item of data.list) {
-                    // Process forecast for midday (12:00:00) to get one entry per day
                     if (item.dt_txt.includes("12:00:00")) {
                         const date = new Date(item.dt_txt);
                         const day = date.toLocaleDateString(undefined, { weekday: 'short' });
-                        // Prevent duplicate days
                         if (!forecastByDay[day]) {
                             forecastByDay[day] = {
                                 temp: item.main.temp,
@@ -901,7 +1001,6 @@
             const options = { year: 'numeric', month: 'long', day: 'numeric' };
             document.getElementById('weatherDate').textContent = today.toLocaleDateString(undefined, options);
             
-            // Reset the search input and results
             document.getElementById('citySearchInput').value = '';
             document.getElementById('todayWeather').innerHTML = '<em>Enter a city to get the forecast.</em>';
             document.getElementById('forecastTable').innerHTML = `<tr><th>Day</th><th>Temperature (°C)</th><th>Weather</th></tr>`;
